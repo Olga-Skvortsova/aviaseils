@@ -12,11 +12,15 @@ import { newTicketsAction, filtredTicketsAction } from '../../store/getTicketsRe
 
 import styles from './filter.module.sass';
 
+const selectorGetTicketsReducer = (state) => state.getTicketsReducer;
+const selectorFilterReducer = (state) => state.filterReducer;
+const selectorTabsReducer = (state) => state.tabsReducer;
+
 export default function Filter() {
   const dispatch = useDispatch();
-  const { tickets, filtredTickets } = useSelector((state) => state.getTicketsReducer);
-  const { filter } = useSelector((state) => state.filterReducer);
-  const { tab } = useSelector((state) => state.tabsReducer);
+  const { tickets, filtredTickets } = useSelector(selectorGetTicketsReducer);
+  const { filter } = useSelector(selectorFilterReducer);
+  const { tab } = useSelector(selectorTabsReducer);
 
   useEffect(() => {
     if (filter.includes(4)) {

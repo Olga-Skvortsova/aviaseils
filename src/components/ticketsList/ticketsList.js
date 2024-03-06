@@ -5,12 +5,16 @@ import Ticket from '../ticket';
 
 import styles from './ticketsList.module.sass';
 
+const selectGetTicketsReducer = (state) => state.getTicketsReducer.filtredTickets;
+const selectTabsReducer = (state) => state.tabsReducer.tab;
+const selectFilterReducer = (state) => state.filterReducer.filter;
+
 export default function TicketsList() {
-  const filtredTickets = useSelector((state) => state.getTicketsReducer.filtredTickets);
-  const { tab } = useSelector((state) => state.tabsReducer);
+  const filtredTickets = useSelector(selectGetTicketsReducer);
+  const tab = useSelector(selectTabsReducer);
+  const filter = useSelector(selectFilterReducer);
   const [ticketsListContent, setTicketsListContent] = useState(null);
   const [numberOfTickets, setNumberOfTickets] = useState(5);
-  const { filter } = useSelector((state) => state.filterReducer);
   const [noTicketsMessage, setNoTicketsMessage] = useState(null);
   const moreTickets = useRef(null);
 
@@ -20,7 +24,7 @@ export default function TicketsList() {
         setTicketsListContent(
           filtredTickets
             .slice(0, numberOfTickets)
-            .map((ticket) => <TicketView key={ticket.price + ticket.carrier} ticket={ticket} />)
+            .map((ticket) => <TicketView key={ticket.price + ticket.carrier + Math.random()} ticket={ticket} />)
         );
       }
     };
@@ -57,7 +61,7 @@ export default function TicketsList() {
     <React.Fragment>
       {noTicketsMessage}
       <div className={styles.ticketsList}>
-        <div className={styles.ticketsList__tickets}>{ticketsListContent}</div>
+        <div className={styles.ticketsList__tickets}>{filter.length !== 0 ? ticketsListContent : null}</div>
         <button ref={moreTickets} onClick={changeNumberOfTickets} className={styles.ticketsList__moreTickets}>
           ПОКАЗАТЬ ЕЩЕ 5 БИЛЕТОВ!
         </button>

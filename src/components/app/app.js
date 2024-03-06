@@ -12,10 +12,13 @@ import TicketsList from '../ticketsList';
 
 import styles from './app.module.sass';
 
+const selectSessionIdReducer = (state) => state.sessionIdReducer;
+const selectGetTicketsReducer = (state) => state.getTicketsReducer;
+
 export default function App() {
   const dispatch = useDispatch();
-  const { sessionId, statusOfgetSearchId, errorOfgetSearchId } = useSelector((state) => state.sessionIdReducer);
-  const { statusOfgetTickets, errorOfgetTickets } = useSelector((state) => state.getTicketsReducer);
+  const { sessionId, statusOfgetSearchId, errorOfgetSearchId } = useSelector(selectSessionIdReducer);
+  const { statusOfgetTickets, errorOfgetTickets } = useSelector(selectGetTicketsReducer);
   const [continueFetching, setContinueFetching] = useState(false);
   const [isFirstRequest, setIsFirstRequest] = useState(true);
 
